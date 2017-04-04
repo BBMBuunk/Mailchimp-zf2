@@ -8,12 +8,20 @@
 
 namespace Mailchimp\Controller;
 
+use DrewM\MailChimp\MailChimp;
 use Zend\Mvc\Controller\AbstractActionController;
 
 
 class MailchimpController extends AbstractActionController
 {
     protected $em;
+    protected $config;
+    protected $MailChimp;
+
+    public function getConfig()
+    {
+        return $this->getServiceLocator()->get('Config');
+    }
 
     public function getEntityManager()
     {
@@ -25,9 +33,13 @@ class MailchimpController extends AbstractActionController
 
     public function subscribeAction()
     {
-        $apikey = $_GET['apikey'];
-        $listid = $_GET['listid'];
+        $this->MailChimp = new MailChimp($this->getConfig()['mailchimp']['apikey']);
+        $result = $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
+            'email_address' => 'davy@example.com',
+            'status'        => 'subscribed',
+        ]);
 
+        print_r($result);
     }
 
     public function unsubscribeAction()
