@@ -36,9 +36,8 @@ class MailchimpService
             }
             list(, $data_center) = explode('-', $this->api_key);
             $this->api_endpoint  = str_replace('<dc>', $data_center, $this->api_endpoint);
-        } else {
-            $this->api_endpoint  = $api_endpoint;
         }
+        $this->api_endpoint  = $api_endpoint;
 
         $this->last_response = array('headers' => null, 'body' => null);
     }
@@ -194,54 +193,54 @@ class MailchimpService
             'timeout' => $timeout,
         );
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        $cuHandler = curl_init();
+        curl_setopt($cuHandler, CURLOPT_URL, $url);
+        curl_setopt($cuHandler, CURLOPT_HTTPHEADER, array(
             'Accept: application/vnd.api+json',
             'Content-Type: application/vnd.api+json',
             'Authorization: apikey ' . $this->api_key
         ));
-        curl_setopt($ch, CURLOPT_USERAGENT, 'BBMBUUNK/Mailchimp-zf2/(github.com/bbmbuunk/mailchimp-zf2)');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->verify_ssl);
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        curl_setopt($ch, CURLOPT_ENCODING, '');
-        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+        curl_setopt($cuHandler, CURLOPT_USERAGENT, 'BBMBUUNK/Mailchimp-zf2/(github.com/bbmbuunk/mailchimp-zf2)');
+        curl_setopt($cuHandler, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cuHandler, CURLOPT_VERBOSE, true);
+        curl_setopt($cuHandler, CURLOPT_HEADER, true);
+        curl_setopt($cuHandler, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($cuHandler, CURLOPT_SSL_VERIFYPEER, $this->verify_ssl);
+        curl_setopt($cuHandler, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+        curl_setopt($cuHandler, CURLOPT_ENCODING, '');
+        curl_setopt($cuHandler, CURLINFO_HEADER_OUT, true);
 
         switch ($http_verb) {
             case 'post':
-                curl_setopt($ch, CURLOPT_POST, true);
-                $this->attachRequestPayload($ch, $args);
+                curl_setopt($cuHandler, CURLOPT_POST, true);
+                $this->attachRequestPayload($cuHandler, $args);
                 break;
 
             case 'get':
                 $query = http_build_query($args, '', '&');
-                curl_setopt($ch, CURLOPT_URL, $url . '?' . $query);
+                curl_setopt($cuHandler, CURLOPT_URL, $url . '?' . $query);
                 break;
 
             case 'delete':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                curl_setopt($cuHandler, CURLOPT_CUSTOMREQUEST, 'DELETE');
                 break;
 
             case 'patch':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-                $this->attachRequestPayload($ch, $args);
+                curl_setopt($cuHandler, CURLOPT_CUSTOMREQUEST, 'PATCH');
+                $this->attachRequestPayload($cuHandler, $args);
                 break;
 
             case 'put':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-                $this->attachRequestPayload($ch, $args);
+                curl_setopt($cuHandler, CURLOPT_CUSTOMREQUEST, 'PUT');
+                $this->attachRequestPayload($cuHandler, $args);
                 break;
         }
 
-        $responseContent = curl_exec($ch);
+        $responseContent = curl_exec($cuHandler);
 
-        $response['headers'] = curl_getinfo($ch);
+        $response['headers'] = curl_getinfo($cuHandler);
         if ($responseContent === false) {
-            $this->last_error = curl_error($ch);
+            $this->last_error = curl_error($cuHandler);
         } else {
             $headerSize = $response['headers']['header_size'];
 
@@ -253,7 +252,7 @@ class MailchimpService
             }
         }
 
-        curl_close($ch);
+        curl_close($cuHandler);
 
         $formattedResponse = $this->formatResponse($response);
 
@@ -335,14 +334,14 @@ class MailchimpService
 
     /**
      * Encode the data and attach it to the request
-     * @param   resource $ch cURL session handle, used by reference
+     * @param   resource $cuHandler cURL session handle, used by reference
      * @param   array $data Assoc array of data to attach
      */
-    private function attachRequestPayload(&$ch, $data)
+    private function attachRequestPayload(&$cuHandler, $data)
     {
         $encoded = json_encode($data);
         $this->last_request['body'] = $encoded;
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded);
+        curl_setopt($cuHandler, CURLOPT_POSTFIELDS, $encoded);
     }
 
     /**
