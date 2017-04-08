@@ -12,11 +12,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "module\\Mailchimp\\": "src"
+      "Mailchimp\\": "module/Mailchimp/src/"
     }
-  },
-  "require": {
-    "phpunit/phpunit": "5.5.*",
-    "drewm/mailchimp-api": "^2.4"
   }
 }
