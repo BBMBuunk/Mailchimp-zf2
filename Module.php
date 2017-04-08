@@ -19,21 +19,10 @@ class Module
     }
     public function getServiceConfig()
     {
+        //TODO: could be added i guess
         return array(
-            'factories' => array(
-                'Blog\Model\BlogTable' =>  function($sm) {
-                    $tableGateway = $sm->get('BlogTableGateway');
-                    $table = new BlogTable($tableGateway);
-                    return $table;
-                },
-                'BlogTableGateway' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Blog());
-                    return new TableGateway('blogposts', $dbAdapter, null, $resultSetPrototype);
-                },
-            ),
-        );
+            'services' => array()
+            );
     }
     public function getConfig()
     {
