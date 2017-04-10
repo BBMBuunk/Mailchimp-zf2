@@ -1,6 +1,7 @@
 <?php
 
 namespace Mailchimp\Service;
+use Zend\Validator\EmailAddress;
 
 class MailchimpService
 {
@@ -60,6 +61,24 @@ class MailchimpService
     public function subscriberHash($email)
     {
         return md5(strtolower($email));
+    }
+
+    /**
+     * Validates an email address
+     * @param   string $email The subscriber's email address
+     * @return  string result of valid email address
+     */
+    public function validateEmail($email)
+    {
+        $validator = new EmailAddress;
+        if ($validator->isValid($email)) {
+            return $email;
+        } else {
+            // email is invalid; print the reasons
+            foreach ($validator->getMessages() as $message) {
+                echo "$message\n";
+            }
+        }
     }
 
     /**
