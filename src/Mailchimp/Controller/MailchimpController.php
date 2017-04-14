@@ -34,10 +34,11 @@ class MailchimpController extends AbstractActionController
     {
         $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
         $email = $this->MailChimp->validateEmail($_GET['email']);
-        $result = $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
+        $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
             'email_address' => $email,
             'status'        => 'subscribed',
         ]);
+        return $this->redirect()->toRoute('blog');
     }
 
     public function unsubscribeAction()
@@ -47,11 +48,10 @@ class MailchimpController extends AbstractActionController
         if ($email) {
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
-        $result = $this->MailChimp->patch("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash, [
+        $this->MailChimp->put("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash, [
             'email_address' => $email,
             'status'        => 'unsubscribed',
         ]);
-        $test = $this->MailChimp->getLastResponse();
         return $this->redirect()->toRoute('blog');
     }
 } 

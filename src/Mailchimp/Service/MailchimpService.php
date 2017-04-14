@@ -5,8 +5,8 @@ use Zend\Validator\EmailAddress;
 
 class MailchimpService
 {
-    private $api_key;
-    private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
+    protected $api_key;
+    protected $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
 
     const TIMEOUT = 10;
 
@@ -38,7 +38,6 @@ class MailchimpService
             list(, $data_center) = explode('-', $this->api_key);
             $this->api_endpoint  = str_replace('<dc>', $data_center, $this->api_endpoint);
         }
-        $this->api_endpoint  = $api_endpoint;
 
         $this->last_response = array('headers' => null, 'body' => null);
     }
