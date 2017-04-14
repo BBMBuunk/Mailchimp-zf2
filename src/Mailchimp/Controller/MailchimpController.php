@@ -33,14 +33,25 @@ class MailchimpController extends AbstractActionController
     public function subscribeAction()
     {
         $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $result = $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
-            'email_address' => 'bbmbuunk@gmail.com',
+        $email = $this->MailChimp->validateEmail($_GET['email']);
+        $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
+            'email_address' => $email,
             'status'        => 'subscribed',
         ]);
+        return $this->redirect()->toRoute('blog');
     }
 
     public function unsubscribeAction()
     {
-
+        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
+        $email = $this->MailChimp->validateEmail($_GET['email']);
+        if ($email) {
+            $emailHash = $this->MailChimp->subscriberHash($email);
+        }
+        $this->MailChimp->put("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash, [
+            'email_address' => $email,
+            'status'        => 'unsubscribed',
+        ]);
+        return $this->redirect()->toRoute('blog');
     }
 } 
