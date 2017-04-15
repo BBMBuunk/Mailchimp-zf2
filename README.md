@@ -7,18 +7,18 @@ Mailchimp zf2 - module
   - Finally made subscribing work
   - Readme update
   - less bugs
-
-## Short term
   - Unsubscribe a client
   - Delete a client
+
+## Short term
   - Refactor some code
+  - More services
+  - More Controller actions
 
 
 ### Long term
 
  - Write PHPUnit Tests
- - More services
- - More Controller actions
  - Dynamic setup for easy code convertion to Zend Framework 3 Module
 
 Code quality of project
