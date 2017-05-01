@@ -26,6 +26,6 @@
   "require-dev": {
     "phpunit/phpunit": "^4.8",
     "zendframework/zend-test": "^2.6",
-    "zendframework/zend-loader": "^2.4",
+    "zendframework/zend-loader": "^2.4"
   }
 }
