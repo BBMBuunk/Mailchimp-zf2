@@ -1,31 +1,30 @@
 <?php
-namespace Mailchimp;
+namespace Bbmbuunk\Mailchimp;
 
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
-class Module
+class Module implements AutoloaderProviderInterface, ConfigProviderInterface
 {
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
-    }
-    public function getServiceConfig()
-    {
-        //TODO: could be added i guess
-        return array(
-            'services' => array()
-            );
-    }
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        $config = [];
+
+        foreach (glob(__DIR__ . DIRECTORY_SEPARATOR .'config' . DIRECTORY_SEPARATOR . '*.php') as $filename) {
+            $config = array_merge($config, include $filename);
+        }
+
+        return $config;
+    }
+
+    public function getAutoloaderConfig()
+    {
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
+                    __NAMESPACE__ => __DIR__ . '/src'
+                ],
+            ],
+        ];
     }
 }

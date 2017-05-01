@@ -1,19 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Bram
- * Date: 18-12-2016
- * Time: 15:39
- */
 
-namespace Mailchimp;
+namespace Bbmbuunk\Mailchimp;
+
+use Bbmbuunk\Mailchimp\Controller\MailchimpController;
+use Bbmbuunk\Mailchimp\Factory\MailchimpControllerFactory;
 
 return array(
     // This lines opens the configuration for the RouteManager
     'controllers' => array(
-        'invokables' => array(
-            'Mailchimp\Controller\Mailchimp' => 'Mailchimp\Controller\MailchimpController',
-        ),
+        'factories' => [
+            MailchimpController::class => MailchimpControllerFactory::class
+        ],
     ),
 
     // The following section is new and should be added to your file
@@ -27,17 +24,11 @@ return array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Mailchimp\Controller\Mailchimp',
+                        'controller' => MailchimpController::class,
                         'action'     => 'subscribe',
                     ),
                 ),
             ),
         ),
-    ),
-
-    //Set Apikey and list id's from Mailchimp
-    'mailchimp' => array(
-        'apikey' => 'xxxxxx',
-        'listid' => 'xxxxxx',
     ),
 );
