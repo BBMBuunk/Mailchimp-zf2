@@ -110,7 +110,7 @@ class MailchimpController extends AbstractActionController
         }
         $result = $this->MailChimp->get("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
         if(isset($result['status'])) {
-            return $this->redirect()->toRoute('blog');
+            return $this->redirectToRoute('blog');
         }
         return "We found nothing at all.";
     }
