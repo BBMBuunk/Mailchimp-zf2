@@ -1,5 +1,5 @@
 <?php
-namespace Bbmbuunk\Mailchimp;
+namespace ZFMailchimp;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;

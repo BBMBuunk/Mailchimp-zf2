@@ -6,7 +6,7 @@
  * Time: 19:20
  */
 
-namespace Bbmbuunk\Mailchimp\Controller;
+namespace ZFMailchimp\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Bbmbuunk\Mailchimp\Service\MailchimpService;

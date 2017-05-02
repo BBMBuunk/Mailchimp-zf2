@@ -1,6 +1,6 @@
 <?php
 
-namespace MailchimpTest;
+namespace ZFMailchimpTest;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;

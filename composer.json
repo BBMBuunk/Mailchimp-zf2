@@ -1,7 +1,7 @@
 {
-  "name": "bbmbuunk/mailchimp-zf2",
-  "description": "ZF2 Mailchimp Module",
-  "type": "bbmbuunk-mailchimp-zf2-module",
+  "name": "bbmbuunk/zfmailchimp",
+  "description": "ZF Mailchimp Module",
+  "type": "bbmbuunk-mailchimp-module",
   "keywords": ["zf2", "mailchimp", "zf"],
   "homepage": "http://www.brambuunk.nl/",
   "license" : "proprietary",
@@ -9,13 +9,13 @@
     {
       "name": "Bram Buunk",
       "email": "bbmbuunk@gmail.com",
-      "homepage": "https://github.com/bbmbuunk/mailchimp-zf2",
+      "homepage": "https://github.com/bbmbuunk/zfmailchimp",
       "role": "Developer"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Bbmbuunk\\Mailchimp\\": "src/"
+      "ZFMailchimp\\": "src/"
     },
     "classmap": [
       "./Module.php"
