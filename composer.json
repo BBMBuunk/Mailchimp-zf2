@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "ZFMailchimp\\": "src/"
+      "Mailchimp\\": "src/"
     },
     "classmap": [
       "./Module.php"
@@ -26,9 +26,9 @@
   "require": {
     "php": ">=5.6 || ^7.0",
     "zendframework/zend-mvc": "^2.7",
-    "zendframework/zend-validator": "^2",
-    "zend/module-manager": "^2",
-    "zendframework/zend-http": "^2",
+    "zendframework/zend-validator": "^2.0",
+    "zend/module-manager": "^2.0",
+    "zendframework/zend-http": "^2.0",
     "zendframework/zend-servicemanager": "^2.7"
   },
   "require-dev": {
