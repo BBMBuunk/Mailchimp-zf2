@@ -1,5 +1,5 @@
 {
-  "name": "bbm-buunk/Mailchimp",
+  "name": "bbm-buunk/mailchimp",
   "description": "ZF Mailchimp Module",
   "type": "bbmbuunk-mailchimp-module",
   "keywords": ["zf2", "mailchimp", "zf"],
