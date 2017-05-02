@@ -1,6 +1,6 @@
 <?php
 
-namespace Bbmbuunk\Mailchimp\Factory;
+namespace ZFMailchimp\Factory;
 
 use Bbmbuunk\Mailchimp\Controller\MailchimpController;
 use Zend\ServiceManager\FactoryInterface;

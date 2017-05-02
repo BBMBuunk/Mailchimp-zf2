@@ -1,6 +1,6 @@
 <?php
 
-namespace Bbmbuunk\Mailchimp\Controller;
+namespace ZFMailchimp\Controller;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 

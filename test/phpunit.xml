@@ -3,7 +3,7 @@
 <phpunit bootstrap="Bootstrap.php" colors="true">
     <testsuites>
         <testsuite name="modules">
-            <directory>./MailchimpTest</directory>
+            <directory>./ZFMailchimpTest</directory>
         </testsuite>
     </testsuites>
     <filter>

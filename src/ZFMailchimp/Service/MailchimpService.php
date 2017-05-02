@@ -1,6 +1,6 @@
 <?php
 
-namespace Bbmbuunk\Mailchimp\Service;
+namespace ZFMailchimp\Service;
 
 use Zend\Validator\EmailAddress;
 use Zend\I18n\Translator\TranslatorAwareTrait;
