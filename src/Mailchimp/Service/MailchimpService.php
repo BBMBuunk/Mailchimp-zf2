@@ -1,10 +1,14 @@
 <?php
 
-namespace Mailchimp\Service;
+namespace Bbmbuunk\Mailchimp\Service;
+
 use Zend\Validator\EmailAddress;
+use Zend\I18n\Translator\TranslatorAwareTrait;
 
 class MailchimpService
 {
+    use TranslatorAwareTrait;
+
     protected $api_key;
     protected $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
 
@@ -33,7 +37,7 @@ class MailchimpService
 
         if ($api_endpoint === null) {
             if (strpos($this->api_key, '-') === false) {
-                throw new \Exception("Invalid MailChimp API key `{$api_key}` supplied.");
+                throw new \Exception($this->getTranslator()->translate('Invalid MailChimp API key ') . $api_key . (' supplied.'));
             }
             list(, $data_center) = explode('-', $this->api_key);
             $this->api_endpoint  = str_replace('<dc>', $data_center, $this->api_endpoint);

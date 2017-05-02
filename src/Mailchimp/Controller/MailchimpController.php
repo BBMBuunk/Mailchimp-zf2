@@ -6,28 +6,44 @@
  * Time: 19:20
  */
 
-namespace Mailchimp\Controller;
+namespace Bbmbuunk\Mailchimp\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Mailchimp\Service\MailchimpService;
+use Bbmbuunk\Mailchimp\Service\MailchimpService;
 
 class MailchimpController extends AbstractActionController
 {
-    protected $em;
-    protected $config;
+    /**
+     * @var ServiceManager|ServiceLocatorInterface
+     */
+    protected $serviceManager;
+
+    /**
+     * @var
+     */
     protected $MailChimp;
 
-    public function getConfig()
+    public function __construct(ServiceLocatorInterface $serviceManager)
     {
-        return $this->getServiceLocator()->get('Config');
+        $this->setServiceManager($serviceManager);
     }
 
-    public function getEntityManager()
+    /**
+     * @return ServiceLocatorInterface|ServiceManager
+     */
+    public function getServiceManager()
     {
-        if (null === $this->em) {
-            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        }
-        return $this->em;
+        return $this->serviceManager;
+    }
+
+    /**
+     * @param ServiceLocatorInterface|ServiceManager $serviceManager
+     * @return MailchimpController
+     */
+    public function setServiceManager($serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+        return $this;
     }
 
     public function subscribeAction()
@@ -38,7 +54,7 @@ class MailchimpController extends AbstractActionController
             'email_address' => $email,
             'status'        => 'subscribed',
         ]);
-        return $this->redirect()->toRoute('blog');
+        return $this->redirectToRoute('blog');
     }
 
     public function unsubscribeAction()
@@ -51,7 +67,7 @@ class MailchimpController extends AbstractActionController
         $this->MailChimp->put("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash, [
             'status'        => 'unsubscribed',
         ]);
-        return $this->redirect()->toRoute('blog');
+        return $this->redirectToRoute('blog');
     }
 
     public function deleteAction()
@@ -62,6 +78,40 @@ class MailchimpController extends AbstractActionController
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
         $this->MailChimp->delete("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
-        return $this->redirect()->toRoute('blog');
+        return $this->redirectToRoute('blog');
+    }
+
+    /**
+     * Redirect to a route, or pass the url to the view for a javascript redirect
+     *
+     * @return mixed|\Zend\Http\Response
+     */
+    public function redirectToRoute()
+    {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            return [
+                'redirect' => call_user_func_array([
+                    $this->url(), 'fromRoute'
+                ], func_get_args())
+            ];
+        }
+
+        return call_user_func_array([
+            $this->redirect(), 'toRoute'
+        ], func_get_args());
+    }
+
+    public function getSubscriberAction()
+    {
+        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
+        $email = $this->MailChimp->validateEmail($_GET['email']);
+        if ($email) {
+            $emailHash = $this->MailChimp->subscriberHash($email);
+        }
+        $result = $this->MailChimp->get("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
+        if(isset($result['status'])) {
+            return $this->redirectToRoute('blog');
+        }
+        return "We found nothing at all.";
     }
 } 
