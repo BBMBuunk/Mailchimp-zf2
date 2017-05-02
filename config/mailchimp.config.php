@@ -1,5 +1,5 @@
 <?php
-namespace Bbmbuunk\Mailchimp;
+namespace Mailchimp;
 
 return array(
     //Set Apikey and list id's from Mailchimp

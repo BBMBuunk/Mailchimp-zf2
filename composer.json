@@ -1,5 +1,5 @@
 {
-  "name": "BBMBuunk/ZFMailchimp",
+  "name": "bbm-buunk/Mailchimp",
   "description": "ZF Mailchimp Module",
   "type": "bbmbuunk-mailchimp-module",
   "keywords": ["zf2", "mailchimp", "zf"],
@@ -9,7 +9,7 @@
     {
       "name": "Bram Buunk",
       "email": "bbmbuunk@gmail.com",
-      "homepage": "https://github.com/bbmbuunk/zfmailchimp",
+      "homepage": "https://github.com/bbmbuunk/Mailchimp",
       "role": "Developer"
     }
   ],

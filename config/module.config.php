@@ -1,6 +1,6 @@
 <?php
 
-namespace Bbmbuunk\Mailchimp;
+namespace Mailchimp;
 
 use Bbmbuunk\Mailchimp\Controller\MailchimpController;
 use Bbmbuunk\Mailchimp\Factory\MailchimpControllerFactory;
