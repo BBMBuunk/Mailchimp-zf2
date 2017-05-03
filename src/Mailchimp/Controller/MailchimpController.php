@@ -9,7 +9,9 @@
 namespace Mailchimp\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Bbmbuunk\Mailchimp\Service\MailchimpService;
+use Mailchimp\Service\MailchimpService;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 
 class MailchimpController extends AbstractActionController
 {
@@ -23,27 +25,20 @@ class MailchimpController extends AbstractActionController
      */
     protected $MailChimp;
 
-    public function __construct(ServiceLocatorInterface $serviceManager)
+    /**
+     * @var array
+     */
+    protected $config;
+
+    public function __construct(ServiceLocatorInterface $serviceManager, array $config)
     {
+        $this->setConfig($config);
         $this->setServiceManager($serviceManager);
     }
 
-    /**
-     * @return ServiceLocatorInterface|ServiceManager
-     */
-    public function getServiceManager()
+    public function indexAction()
     {
-        return $this->serviceManager;
-    }
-
-    /**
-     * @param ServiceLocatorInterface|ServiceManager $serviceManager
-     * @return MailchimpController
-     */
-    public function setServiceManager($serviceManager)
-    {
-        $this->serviceManager = $serviceManager;
-        return $this;
+        return $this->redirectToRoute('home');
     }
 
     public function subscribeAction()
@@ -54,7 +49,7 @@ class MailchimpController extends AbstractActionController
             'email_address' => $email,
             'status'        => 'subscribed',
         ]);
-        return $this->redirectToRoute('blog');
+        return $this->redirectToRoute('home');
     }
 
     public function unsubscribeAction()
@@ -67,7 +62,7 @@ class MailchimpController extends AbstractActionController
         $this->MailChimp->put("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash, [
             'status'        => 'unsubscribed',
         ]);
-        return $this->redirectToRoute('blog');
+        return $this->redirectToRoute('home');
     }
 
     public function deleteAction()
@@ -78,7 +73,7 @@ class MailchimpController extends AbstractActionController
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
         $this->MailChimp->delete("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
-        return $this->redirectToRoute('blog');
+        return $this->redirectToRoute('home');
     }
 
     /**
@@ -110,8 +105,36 @@ class MailchimpController extends AbstractActionController
         }
         $result = $this->MailChimp->get("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
         if(isset($result['status'])) {
-            return $this->redirectToRoute('blog');
+            return $this->redirectToRoute('home');
         }
         return "We found nothing at all.";
+    }
+
+    /**
+     * @param ServiceLocatorInterface|ServiceManager $serviceManager
+     * @return MailchimpController
+     */
+    public function setServiceManager($serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param array $config
+     * @return MailchimpController
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+        return $this;
     }
 } 

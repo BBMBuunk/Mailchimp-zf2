@@ -37,7 +37,7 @@ class MailchimpService
 
         if ($api_endpoint === null) {
             if (strpos($this->api_key, '-') === false) {
-                throw new \Exception($this->getTranslator()->translate('Invalid MailChimp API key ') . $api_key . (' supplied.'));
+                throw new \Exception($this->getTranslator()->translate('Invalid MailChimp API key ' . $api_key . ' supplied.'));
             }
             list(, $data_center) = explode('-', $this->api_key);
             $this->api_endpoint  = str_replace('<dc>', $data_center, $this->api_endpoint);
