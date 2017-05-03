@@ -49,7 +49,7 @@ class MailchimpController extends AbstractActionController
     public function subscribeAction()
     {
         $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $email = $this->MailChimp->validateEmail($_GET['email']);
+        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
         $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
             'email_address' => $email,
             'status'        => 'subscribed',
@@ -60,7 +60,7 @@ class MailchimpController extends AbstractActionController
     public function unsubscribeAction()
     {
         $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $email = $this->MailChimp->validateEmail($_GET['email']);
+        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
         if ($email) {
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
@@ -73,7 +73,7 @@ class MailchimpController extends AbstractActionController
     public function deleteAction()
     {
         $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $email = $this->MailChimp->validateEmail($_GET['email']);
+        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
         if ($email) {
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
@@ -104,7 +104,7 @@ class MailchimpController extends AbstractActionController
     public function getSubscriberAction()
     {
         $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $email = $this->MailChimp->validateEmail($_GET['email']);
+        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
         if ($email) {
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
