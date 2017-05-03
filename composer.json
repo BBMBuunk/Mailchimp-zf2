@@ -27,7 +27,7 @@
     "php": ">=5.6 || ^7.0",
     "zendframework/zend-mvc": "~2.5",
     "zendframework/zend-validator": "~2.5",
-    "zend/module-manager": "~2.5.1",
+    "zendframework/zend-modulemanager": "~2.5.0",
     "zendframework/zend-http": "~2.5",
     "zendframework/zend-servicemanager": "~2.5"
   },
