@@ -27,8 +27,8 @@ class MailchimpControllerFactory implements FactoryInterface
 
         if (isset($configArray) && is_array($configArray)) {
             return new MailchimpController($serviceManager, $configArray);
-        } else {
-            throw new \Exception('Failed getting config...');
         }
+
+        throw new \Exception('Failed getting config...');
     }
 }

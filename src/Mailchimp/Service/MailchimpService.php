@@ -76,11 +76,10 @@ class MailchimpService
         $validator = new EmailAddress;
         if ($validator->isValid($email)) {
             return $email;
-        } else {
-            // email is invalid; print the reasons
-            foreach ($validator->getMessages() as $message) {
-                echo "$message\n";
-            }
+        }
+        // email is invalid; print the reasons
+        foreach ($validator->getMessages() as $message) {
+            echo "$message\n";
         }
     }
 
