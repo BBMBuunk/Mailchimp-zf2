@@ -1,10 +1,10 @@
 <?php
 namespace Mailchimp;
 
-return array(
+return [
     //Set Apikey and list id's from Mailchimp
-    'mailchimp' => array(
+    'mailchimp' => [
         'apikey' => 'xxxxxx',
         'listid' => 'xxxxxx',
-    )
-);
+    ]
+];

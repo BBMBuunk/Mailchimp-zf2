@@ -2,33 +2,46 @@
 
 namespace Mailchimp;
 
-use Bbmbuunk\Mailchimp\Controller\MailchimpController;
-use Bbmbuunk\Mailchimp\Factory\MailchimpControllerFactory;
+use Mailchimp\Controller\MailchimpController;
+use Mailchimp\Factory\MailchimpControllerFactory;
+use Zend\Mvc\Router\Http\Literal;
+use Zend\Mvc\Router\Http\Segment;
 
-return array(
+return [
     // This lines opens the configuration for the RouteManager
-    'controllers' => array(
+    'controllers' => [
         'factories' => [
             MailchimpController::class => MailchimpControllerFactory::class
         ],
-    ),
+    ],
 
     // The following section is new and should be added to your file
-    'router' => array(
-        'routes' => array(
-            'mailchimp' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/mailchimp[/:action]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
+    'router' => [
+        'routes' => [
+            'mailchimp' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/mailchimp',
+                    'defaults' => [
                         'controller' => MailchimpController::class,
-                        'action'     => 'subscribe',
-                    ),
-                ),
-            ),
-        ),
-    ),
-);
+                        'action'     => 'index',
+                    ],
+                ],
+                //Add every action like subscribe
+                'may_terminate' => true,
+                'child_routes' => [
+                    'subscribe' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/subscribe',
+                            'defaults' => [
+                                'controller' => MailchimpController::class,
+                                'action'     => 'subscribe',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
