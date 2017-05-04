@@ -10,7 +10,6 @@ namespace Mailchimp\Controller;
 
 use Mailchimp\Service\MailchimpCampaignService;
 use Zend\Mvc\Controller\AbstractActionController;
-use Mailchimp\Service\MailchimpService;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
 
