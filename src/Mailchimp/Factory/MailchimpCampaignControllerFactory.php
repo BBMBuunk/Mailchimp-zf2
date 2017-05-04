@@ -18,7 +18,7 @@ class MailchimpCampaignControllerFactory implements FactoryInterface
 {
     /**
      * @param ServiceLocatorInterface $serviceLocator
-     * @return MailchimpController
+     * @return MailchimpCampaignController
      * @throws \Exception
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

@@ -44,7 +44,6 @@ class MailchimpCampaignController extends AbstractActionController
     public function subscribeAction()
     {
         $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
-        $email;
         return $this->redirectToRoute('home');
     }
 
