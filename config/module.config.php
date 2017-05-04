@@ -45,10 +45,10 @@ return [
                     ],
                 ],
             ],
-            'mailchimp' => [
+            'campaign' => [
                 'type'    => Literal::class,
                 'options' => [
-                    'route'    => '/mailchimpcampaign',
+                    'route'    => '/campaign',
                     'defaults' => [
                         'controller' => MailchimpCampaignController::class,
                         'action'     => 'index',
