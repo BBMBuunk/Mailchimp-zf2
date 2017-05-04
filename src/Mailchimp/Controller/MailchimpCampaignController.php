@@ -8,6 +8,7 @@
 
 namespace Mailchimp\Controller;
 
+use Mailchimp\Service\MailchimpCampaignService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Mailchimp\Service\MailchimpService;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -43,12 +44,8 @@ class MailchimpCampaignController extends AbstractActionController
 
     public function subscribeAction()
     {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
         $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
-        $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
-            'email_address' => $email,
-            'status'        => 'subscribed',
-        ]);
+        $email;
         return $this->redirectToRoute('home');
     }
 
