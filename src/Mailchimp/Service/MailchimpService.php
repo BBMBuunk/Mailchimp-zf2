@@ -221,7 +221,7 @@ class MailchimpService
             'Content-Type: application/vnd.api+json',
             'Authorization: apikey ' . $this->api_key
         ));
-        curl_setopt($cuHandler, CURLOPT_USERAGENT, 'BBMBUUNK/Mailchimp-zf2/(github.com/bbmbuunk/mailchimp-zf2)');
+        curl_setopt($cuHandler, CURLOPT_USERAGENT, 'bbm-buunk/mailchimp/(github.com/bbm-buunk/mailchimp)');
         curl_setopt($cuHandler, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cuHandler, CURLOPT_VERBOSE, true);
         curl_setopt($cuHandler, CURLOPT_HEADER, true);

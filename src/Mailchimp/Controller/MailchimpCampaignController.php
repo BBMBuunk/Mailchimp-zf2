@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Bram
- * Date: 18-12-2016
- * Time: 19:20
+ * Date: 4-5-2017
+ * Time: 10:59
  */
 
 namespace Mailchimp\Controller;
@@ -13,7 +13,7 @@ use Mailchimp\Service\MailchimpService;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class MailchimpController extends AbstractActionController
+class MailchimpCampaignController extends AbstractActionController
 {
     /**
      * @var ServiceManager|ServiceLocatorInterface
@@ -52,44 +52,6 @@ class MailchimpController extends AbstractActionController
         return $this->redirectToRoute('home');
     }
 
-    public function unsubscribeAction()
-    {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
-        if ($email) {
-            $emailHash = $this->MailChimp->subscriberHash($email);
-        }
-        $this->MailChimp->put("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash, [
-            'status'        => 'unsubscribed',
-        ]);
-        return $this->redirectToRoute('home');
-    }
-
-    public function deleteAction()
-    {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
-        if ($email) {
-            $emailHash = $this->MailChimp->subscriberHash($email);
-        }
-        $this->MailChimp->delete("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
-        return $this->redirectToRoute('home');
-    }
-
-    public function getSubscriberAction()
-    {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
-        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
-        if ($email) {
-            $emailHash = $this->MailChimp->subscriberHash($email);
-        }
-        $result = $this->MailChimp->get("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
-        if(isset($result['status'])) {
-            return $this->redirectToRoute('home');
-        }
-        return "We found nothing at all.";
-    }
-
     /**
      * Redirect to a route, or pass the url to the view for a javascript redirect
      *
@@ -112,7 +74,7 @@ class MailchimpController extends AbstractActionController
 
     /**
      * @param ServiceLocatorInterface|ServiceManager $serviceManager
-     * @return MailchimpController
+     * @return MailchimpCampaignController
      */
     public function setServiceManager($serviceManager)
     {
@@ -130,11 +92,12 @@ class MailchimpController extends AbstractActionController
 
     /**
      * @param array $config
-     * @return MailchimpController
+     * @return MailchimpCampaignController
      */
     public function setConfig($config)
     {
         $this->config = $config;
         return $this;
     }
-} 
+
+}
