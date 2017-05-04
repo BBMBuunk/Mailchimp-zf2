@@ -22,7 +22,8 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
         return [
             'Zend\Loader\StandardAutoloader' => [
                 'namespaces' => [
-                    __NAMESPACE__ => __DIR__ . '/src'
+                    //TODO: added __NAMESPACE__ to /src need to check if working
+                    __NAMESPACE__ => __DIR__ . '/src' . __NAMESPACE__,
                 ],
             ],
         ];
