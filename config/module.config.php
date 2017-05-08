@@ -57,13 +57,13 @@ return [
                 //Add every action like subscribe
                 'may_terminate' => true,
                 'child_routes' => [
-                    'subscribe' => [
+                    'create' => [
                         'type'    => Literal::class,
                         'options' => [
-                            'route'    => '/subscribe',
+                            'route'    => '/create',
                             'defaults' => [
                                 'controller' => MailchimpCampaignController::class,
-                                'action'     => 'subscribe',
+                                'action'     => 'createCampaign',
                             ],
                         ],
                     ],
