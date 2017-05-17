@@ -6,5 +6,7 @@ return [
     'mailchimp' => [
         'apikey' => 'xxxxxx',
         'listid' => 'xxxxxx',
+        'reply_to' => '',
+        'from_name' => '',
     ]
 ];

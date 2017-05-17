@@ -43,9 +43,9 @@ class MailchimpController extends AbstractActionController
 
     public function subscribeAction()
     {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
         $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
-        $this->MailChimp->post("lists/".$this->getConfig()['mailchimp']['listid']."/members", [
+        $this->MailChimp->post("lists/".$this->getConfig()['listid']."/members", [
             'email_address' => $email,
             'status'        => 'subscribed',
         ]);
@@ -54,12 +54,12 @@ class MailchimpController extends AbstractActionController
 
     public function unsubscribeAction()
     {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
         $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
         if ($email) {
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
-        $this->MailChimp->put("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash, [
+        $this->MailChimp->put("lists/".$this->getConfig()['listid']."/members/". $emailHash, [
             'status'        => 'unsubscribed',
         ]);
         return $this->redirectToRoute('home');
@@ -67,28 +67,45 @@ class MailchimpController extends AbstractActionController
 
     public function deleteAction()
     {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
         $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
         if ($email) {
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
-        $this->MailChimp->delete("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
+        $this->MailChimp->delete("lists/".$this->getConfig()['listid']."/members/". $emailHash);
         return $this->redirectToRoute('home');
     }
 
     public function getSubscriberAction()
     {
-        $this->MailChimp = new MailchimpService($this->getConfig()['mailchimp']['apikey']);
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
         $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
         if ($email) {
             $emailHash = $this->MailChimp->subscriberHash($email);
         }
-        $result = $this->MailChimp->get("lists/".$this->getConfig()['mailchimp']['listid']."/members/". $emailHash);
+        $result = $this->MailChimp->get("lists/".$this->getConfig()['listid']."/members/". $emailHash);
         if(isset($result['status'])) {
             return $this->redirectToRoute('home');
         }
         return "We found nothing at all.";
     }
+
+    public function searchSubscriberAction()
+    {
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
+        $searchterms = $this->getRequest()->getPost('search-terms');
+        if ($searchterms) {
+            $result = $this->MailChimp->get("search-members" ,[
+                'query'        => $searchterms,
+            ]);
+        }
+
+        if(isset($result)) {
+            return $result;
+        }
+        return "We found nothing at all.";
+    }
+
 
     /**
      * Redirect to a route, or pass the url to the view for a javascript redirect
