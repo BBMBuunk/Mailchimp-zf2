@@ -90,6 +90,23 @@ class MailchimpController extends AbstractActionController
         return "We found nothing at all.";
     }
 
+    public function searchSubscriberAction()
+    {
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
+        $searchterms = $this->getRequest()->getPost('search-terms');
+        if ($searchterms) {
+            $result = $this->MailChimp->get("search-members" ,[
+                'query'        => $searchterms,
+            ]);
+        }
+
+        if(isset($result)) {
+            return $result;
+        }
+        return "We found nothing at all.";
+    }
+
+
     /**
      * Redirect to a route, or pass the url to the view for a javascript redirect
      *

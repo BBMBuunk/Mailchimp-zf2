@@ -43,6 +43,46 @@ return [
                             ],
                         ],
                     ],
+                    'unsubscribe' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/unsubscribe',
+                            'defaults' => [
+                                'controller' => MailchimpController::class,
+                                'action'     => 'unsubscribe',
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/delete',
+                            'defaults' => [
+                                'controller' => MailchimpController::class,
+                                'action'     => 'delete',
+                            ],
+                        ],
+                    ],
+                    'getsubscriber' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/get-subscriber',
+                            'defaults' => [
+                                'controller' => MailchimpController::class,
+                                'action'     => 'getSubscriber',
+                            ],
+                        ],
+                    ],
+                    'search' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/search',
+                            'defaults' => [
+                                'controller' => MailchimpController::class,
+                                'action'     => 'searchSubscriber',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'campaign' => [
@@ -64,6 +104,26 @@ return [
                             'defaults' => [
                                 'controller' => MailchimpCampaignController::class,
                                 'action'     => 'createCampaign',
+                            ],
+                        ],
+                    ],
+                    'send' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/send',
+                            'defaults' => [
+                                'controller' => MailchimpCampaignController::class,
+                                'action'     => 'sendCampaign',
+                            ],
+                        ],
+                    ],
+                    'getAllCampaigns' => [
+                        'type'    => Literal::class,
+                        'options' => [
+                            'route'    => '/get-all-campaigns',
+                            'defaults' => [
+                                'controller' => MailchimpCampaignController::class,
+                                'action'     => 'getAll',
                             ],
                         ],
                     ],

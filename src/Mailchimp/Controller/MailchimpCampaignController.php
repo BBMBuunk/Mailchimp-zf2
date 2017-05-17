@@ -8,7 +8,6 @@
 
 namespace Mailchimp\Controller;
 
-use Mailchimp\Service\MailchimpCampaignService;
 use Mailchimp\Service\MailchimpService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -68,7 +67,7 @@ class MailchimpCampaignController extends AbstractActionController
     }
 
     public function sendCampaignAction() {
-        $this->MailChimp->post('campaigns/' . $responseObj->id . '/actions/send');
+        $result = $this->MailChimp->post('campaigns/' . $responseObj->id . '/actions/send');
         return $this->redirectToRoute('home');
     }
 
