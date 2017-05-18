@@ -8,7 +8,7 @@
 
 namespace Mailchimp\Controller;
 
-use Mailchimp\Service\MailchimpCampaignService;
+use Mailchimp\Service\MailchimpService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
@@ -41,9 +41,33 @@ class MailchimpCampaignController extends AbstractActionController
         return $this->redirectToRoute('home');
     }
 
-    public function subscribeAction()
+    public function getAllAction()
     {
-        $email = $this->MailChimp->validateEmail($this->getRequest()->getPost('email'));
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
+        $result = $this->MailChimp->get('campaigns');
+        return $result;
+    }
+
+
+    public function createCampaignAction()
+    {
+        $newsletter_subject_line = $this->getRequest()->getPost('subject_line');
+        $this->MailChimp = new MailchimpService($this->getConfig()['apikey']);
+        // Create or Post new Campaign
+        $this->MailChimp->post("campaigns", [
+            'type' => 'regular',
+            'recipients' => ['list_id' => $this->getConfig()['listid']],
+            'settings' => ['subject_line' => $newsletter_subject_line,
+                'reply_to' => $this->getConfig()['reply_to'],
+                'from_name' => $this->getConfig()['from_name']
+            ]
+        ]);
+
+        return $this->redirectToRoute('home');
+    }
+
+    public function sendCampaignAction() {
+        $result = $this->MailChimp->post('campaigns/' . $responseObj->id . '/actions/send');
         return $this->redirectToRoute('home');
     }
 
