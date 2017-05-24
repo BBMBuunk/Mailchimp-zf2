@@ -7,7 +7,6 @@ use Mailchimp\Factory\MailchimpControllerFactory;
 use Mailchimp\Controller\MailchimpCampaignController;
 use Mailchimp\Factory\MailchimpCampaignControllerFactory;
 use Zend\Mvc\Router\Http\Literal;
-use Zend\Mvc\Router\Http\Segment;
 
 return [
     // This lines opens the configuration for the RouteManager

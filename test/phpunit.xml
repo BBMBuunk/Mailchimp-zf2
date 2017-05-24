@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="Bootstrap.php" colors="true">
+<phpunit bootstrap="./Bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="modules">
-            <directory>./ZFMailchimpTest</directory>
+        <testsuite name="Controller tests">
+            <directory>./Mailchimp/Controller</directory>
         </testsuite>
     </testsuites>
+    <logging>
+        <log type="coverage-html" target="build/coverage-html"/>
+        <log type="coverage-xml" target="build/coverage-xml"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="tap" target="build/report.tap"/>
+        <log type="coverage-text" target="build/coverage.txt"/>
+    </logging>
     <filter>
         <whitelist
                 addUncoveredFilesFromWhitelist="true"
                 processUncoveredFilesFromWhitelist="true">
-
-            <directory suffix=".php">../src/</directory>
+            <directory suffix=".php">../src</directory>
         </whitelist>
     </filter>
 </phpunit>

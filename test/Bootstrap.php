@@ -3,11 +3,9 @@
 namespace MailchimpTest;
 
 use Zend\Loader\AutoloaderFactory;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
+
 use RuntimeException;
 
-error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
 
 /**
@@ -15,7 +13,6 @@ chdir(__DIR__);
  */
 class Bootstrap
 {
-    protected static $serviceManager;
 
     public static function init()
     {
@@ -23,32 +20,8 @@ class Bootstrap
         if (($path = static::findParentPath('vendor'))) {
             $zf2ModulePaths[] = $path;
         }
-        if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {
-            $zf2ModulePaths[] = $path;
-        }
 
         static::initAutoloader();
-
-        // use ModuleManager to load this module and it's dependencies
-        $config = array(
-            'module_listener_options' => array(
-                'module_paths' => $zf2ModulePaths,
-            ),
-            'modules' => array(
-                'Mailchimp'
-            )
-        );
-
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
-        $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
-        static::$serviceManager = $serviceManager;
-    }
-
-    public static function chroot()
-    {
-        $rootPath = dirname(static::findParentPath('module'));
-        chdir($rootPath);
     }
 
     public static function getServiceManager()
@@ -74,7 +47,7 @@ class Bootstrap
             'Zend\Loader\StandardAutoloader' => array(
                 'autoregister_zf' => true,
                 'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
         ));
@@ -96,4 +69,3 @@ class Bootstrap
 }
 
 Bootstrap::init();
-Bootstrap::chroot();

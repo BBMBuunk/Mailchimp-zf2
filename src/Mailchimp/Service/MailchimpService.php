@@ -3,11 +3,9 @@
 namespace Mailchimp\Service;
 
 use Zend\Validator\EmailAddress;
-use Zend\I18n\Translator\TranslatorAwareTrait;
 
 class MailchimpService
 {
-    use TranslatorAwareTrait;
 
     protected $api_key;
     protected $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';

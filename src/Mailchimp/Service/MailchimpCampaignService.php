@@ -8,10 +8,7 @@
 
 namespace Mailchimp\Service;
 
-use Zend\I18n\Translator\TranslatorAwareTrait;
-
 class MailchimpCampaignService
 {
-    use TranslatorAwareTrait;
 
 }
